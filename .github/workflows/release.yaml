@@ -3,7 +3,7 @@ on:
         tags:
             - "**"
 
-name: Integration
+name: Release
 
 jobs:
   release:
