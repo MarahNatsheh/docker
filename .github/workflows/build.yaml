@@ -24,11 +24,19 @@ jobs:
               env:
                 CGO_ENABLED: 0
               run: |
-                go build
+                go build -o myproject
 
             - name: Run Tests
               run: |
                 go test
+            - name: Integration Tests
+              shell: bash
+              run: |
+                ./myproject &
+                res=$(curl localhost:3000)
+                [[ "$res" == "Hello, World!" ]]
+        
+          
     docker-build:
         runs-on: ubuntu-20.04
         needs: [build]
