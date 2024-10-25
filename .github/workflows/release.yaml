@@ -28,3 +28,18 @@ jobs:
             version=${GITHUB_REF##*/}
             docker push $DOCKER_REPO:$version
             echo "\`docker run -p 3000:3000 $DOCKER_REPO:$version\`" > release 
+      - name: Build Binaries
+        env:
+         CGO_ENABLE: 0
+        run: |
+              GOOS=linux GOARCH=amd64 go build -o linux_amd64
+              GOOS=windows GOARCH=amd64 go build -o windows_amd64
+              GOOS=darwin GOARCH=amd64 go build -o darwin_amd64
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+            body_path: release
+            files: |
+                linux_amd64
+                windows_amd64
+                darwin_amd64
