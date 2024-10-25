@@ -1,0 +1,30 @@
+on:
+    push:
+        tags:
+            - "**"
+
+name: Integration
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-20.04
+    env:
+      DOCKER_REPO: marahn/devops_demo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker Login
+        env:
+          DOCKER_USERNAME: marahn
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: Build Docker Image
+        run: |
+          version=${GITHUB_REF##*/}
+          docker build . -t $DOCKER_REPO:$version
+      - name: Push Docker Image
+        run: |
+            version=${GITHUB_REF##*/}
+            docker push $DOCKER_REPO:$version
+            echo "\`docker run -p 3000:3000 $DOCKER_REPO:$version\`" > release 
