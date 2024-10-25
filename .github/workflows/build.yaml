@@ -33,6 +33,7 @@ jobs:
               shell: bash
               run: |
                 ./myproject &
+                sleep 4
                 res=$(curl localhost:3000)
                 [[ "$res" == "Hello, World!" ]]
         
