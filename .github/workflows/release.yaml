@@ -36,7 +36,7 @@ jobs:
               GOOS=windows GOARCH=amd64 go build -o windows_amd64
               GOOS=darwin GOARCH=amd64 go build -o darwin_amd64
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
             body_path: release
             files: |
