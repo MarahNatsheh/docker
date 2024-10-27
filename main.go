@@ -22,7 +22,7 @@ func main() {
 		return c.SendStatus(200)
 	})
 
-	app.Get("/bye", func(c *fiber.Ctx) error {
+	app.Get("/status", func(c *fiber.Ctx) error {
 		return c.SendString("Bye, World!")
 	})
 
