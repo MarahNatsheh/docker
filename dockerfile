@@ -2,7 +2,7 @@ FROM golang:1.18.3
 
 RUN mkdir /app
 
-ADD . /app
+COPY . /app
 
 WORKDIR /app
 
